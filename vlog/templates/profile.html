@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% block title %}Your Profile{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Your Posts</h2>
+    <!-- Button to trigger modal for creating a new vlog -->
+    <button type="button" class="btn btn-success my-3" data-bs-toggle="modal" data-bs-target="#createVlogModal">
+        New Post
+    </button>
+
+    <!-- Table displaying the user's posts -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Published Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in user_posts %}
+            <tr>
+                <td>{{ post.title }}</td>
+                <td>{{ post.published_date|date:"M d, Y" }}</td>
+                <td>
+                    <!-- Button to trigger modal for editing vlog -->
+                    <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editVlogModal-{{ post.id }}">
+                        Edit
+                    </button>
+                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteVlogModal-{{ post.id }}">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+            <!-- Delete Modal -->
+            <div class="modal fade" id="deleteVlogModal-{{ post.id }}" tabindex="-1" aria-labelledby="deleteVlogModalLabel-{{ post.id }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteVlogModalLabel-{{ post.id }}">Confirm Delete</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure you want to delete the post titled <strong>{{ post.title }}</strong>?
+                        </div>
+                        <div class="modal-footer">
+                            <form method="post" action="{% url 'vlog_delete' post.id %}">
+                                {% csrf_token %}
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="createVlogModal" tabindex="-1" aria-labelledby="createVlogModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="createVlogModalLabel">Create Post</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" action="{% url 'vlog_create' %}">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <label for="title" class="form-label">Vlog Title</label>
+                                    <input type="text" name="title" id="title" class="form-control">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="video_url" class="form-label">Video URL</label>
+                                    <input type="text" name="video_url" id="video_url" class="form-control">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="description" class="form-label">Description</label>
+                                    <textarea name="description" id="description" class="form-control"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="tags" class="form-label">Tags</label>
+                                    <input type="text" name="tags" id="tags" class="form-control">
+                                </div>
+                                <button type="submit" class="btn btn-success w-100 mt-3">Create</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="editVlogModal-{{ post.id }}" tabindex="-1" aria-labelledby="editVlogModalLabel-{{ post.id }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editVlogModalLabel-{{ post.id }}">Edit Post</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Form to edit the specific post -->
+                            <form method="post" action="{% url 'vlog_update' post.id %}">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <label for="title-{{ post.id }}" class="form-label">Vlog Title</label>
+                                    <input type="text" name="title" id="title-{{ post.id }}" class="form-control" value="{{ post.title }}">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="video_url-{{ post.id }}" class="form-label">Video URL</label>
+                                    <input type="text" name="video_url" id="video_url-{{ post.id }}" class="form-control" value="{{ post.video_url }}">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="description-{{ post.id }}" class="form-label">Description</label>
+                                    <textarea name="description" id="description-{{ post.id }}" class="form-control">{{ post.description }}</textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="tags-{{ post.id }}" class="form-label">Tags</label>
+                                    <input type="text" name="tags" id="tags-{{ post.id }}" class="form-control" value="{{ post.tags }}">
+                                </div>
+                                <button type="submit" class="btn btn-warning w-100 mt-3">Update</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <tr>
+                <td colspan="3" class="text-center">You have no posts.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+
+{% endblock %}

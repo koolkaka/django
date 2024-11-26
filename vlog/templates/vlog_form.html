@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if form.instance.pk %}Edit Vlog{% else %}Create Vlog{% endif %}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">{% if form.instance.pk %}Edit Vlog{% else %}Create Vlog{% endif %}</h2>
+    <form method="post">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        <div class="mb-3">
+            <label for="id_title">Title</label>
+            {{ form.title }}
+            {% if form.title.errors %}
+                <div class="text-danger small">{{ form.title.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="mb-3">
+            <label for="id_video_url">Video URL (only Youtube)</label>
+            {{ form.video_url }}
+            {% if form.video_url.errors %}
+                <div class="text-danger small">{{ form.video_url.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="mb-3">
+            <label for="id_description">Description</label>
+            {{ form.description }}
+            {% if form.description.errors %}
+                <div class="text-danger small">{{ form.description.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="mb-3">
+            <label for="id_tags">Tags</label>
+            {{ form.tags }}
+            {% if form.tags.errors %}
+                <div class="text-danger small">{{ form.tags.errors }}</div>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-success w-100">Submit</button>
+    </form>
+</div>
+{% endblock %}

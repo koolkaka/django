@@ -1,0 +1,136 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    flex: 1;
+}
+
+footer {
+    margin-top: auto;
+    background-color: #343a40;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    box-shadow: 0px -2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.alert {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.card-body a.btn {
+    border-radius: 5px;
+    font-weight: bold;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: auto;
+    transition: all 0.3s ease-in-out;
+}
+
+.card-body a.btn:hover {
+    background-color: #0056b3;
+    color: white;
+    transform: scale(1.05);
+}
+
+/* Form */
+form {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+form label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}
+
+form input[type="text"],
+form input[type="url"],
+form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+form input[type="text"]:focus,
+form input[type="url"]:focus,
+form textarea:focus {
+    border-color: #28a745;
+    box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.2);
+    outline: none;
+}
+
+form button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+form button[type="submit"] {
+    background-color: #28a745;
+    color: white;
+}
+
+form button[type="button"] {
+    background-color: #6c757d;
+    color: white;
+}
+
+form button:hover {
+    opacity: 0.9;
+}
+
+* {
+    box-sizing: border-box;
+    transition: all 0.3s ease-in-out;
+}
+.navbar .nav-item {
+    display: flex;
+    align-items: center;
+}
+
+.navbar .nav-link {
+    color: #fff;
+    padding: 0.5rem 1rem;
+    white-space: nowrap;
+}
+
+.navbar .btn {
+    padding: 0;
+    white-space: nowrap;
+}
+
+.navbar form {
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: none;
+    display: inline;
+}
+
